@@ -1,6 +1,5 @@
 import { React, Fragment } from "react";
 import { Route, Routes } from "react-router-dom";
-import Wrapper from './components/Wrapper';
 import Index from './components/pages/Index';
 
 function App() {
