@@ -5,6 +5,7 @@ import Slide from "./../Slide";
 import Footer from "./../Footer";
 import Features from "../Features";
 import CollectionGrid from '../CollectionGrid';
+import ShopList from "../ShopList";
 
 function Index(props) {
   return (
@@ -14,7 +15,7 @@ function Index(props) {
       <Slide />
       <Features />
       <CollectionGrid />
-      
+      <ShopList />
 
       <Footer />
     </div>
