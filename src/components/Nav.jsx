@@ -5,7 +5,7 @@ import shosePic from "../img/shose.png";
 function Nav() {
   return (
     <nav>
-      <ul className="nav-clamp flex flex-col sm:flex-row gap-5 items-center justify-center bg-[#320307] text-white py-5 sm:rounded-full">
+      <ul className="container mx-auto flex flex-col sm:flex-row gap-5 items-center justify-center bg-[#320307] text-white py-5 sm:rounded-full">
         <li>
           <a href="">مردانه</a>
         </li>
