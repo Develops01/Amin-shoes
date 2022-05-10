@@ -1,7 +1,8 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { useState } from "react";
 import profilePic from "../img/profile.svg";
 import shopPic from "../img/shop.svg";
+import shoePic from "../img/shose.png";
 
 const itemCreator = ({ icon, title }, index) => {
   return (
@@ -19,9 +20,15 @@ function TopHeader() {
   ]);
 
   return (
-    <div className="py-4 px-5 flex gap-4">
-      {items.map((item, i) => itemCreator(item, i))}
-    </div>
+    <Fragment>
+      <div className="py-4 px-5 flex gap-4">
+        {items.map((item, i) => itemCreator(item, i))}
+
+        <div className="flex items-center text-xs mr-auto sm:hidden">
+          <img src={shoePic} alt="" className="ml-2 h-[19px]" />
+        </div>
+      </div>
+    </Fragment>
   );
 }
 

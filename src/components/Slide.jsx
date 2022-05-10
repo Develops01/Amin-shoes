@@ -4,7 +4,7 @@ import sliderShoe from "../img/sliderShoe.jpg";
 
 function Slide() {
   return (
-    <section className="flex flex-col sm:flex-row p-12 md:p-0 mt-20 justify-between sm:justify-around min-h-[65vh] nav-clamp">
+    <section className="flex flex-col sm:flex-row p-12 md:p-0 sm:mt-20 justify-between sm:justify-around min-h-[65vh] nav-clamp">
       <div className="max-w-md">
         <span className="text-[#9B6F47] text-xl md:text-2xl italic">
           کفش امیر
