@@ -1,18 +1,13 @@
-import React, { Component, useEffect } from "react";
-import { useState } from "react";
-import ShopCard from "./ShopCard";
+import React, { useEffect, useState } from "react";
 import { paginate } from "./../utils/paginate";
 import Pagination from "./common/pagination";
+import ShopCard from "./ShopCard";
 import ShopCardTwo from "./ShopCardTwo";
 
 import cafshPic from "../img/anotherCafsh.jpg";
 import listStyleIcon from "../img/listStyle.svg";
 import cardStyleIcon from "../img/cardStyle.svg";
 
-import cafshPic from "../img/anotherCafsh.jpg";
-import listStyleIcon from "../img/listStyle.svg";
-import cardStyleIcon from "../img/cardStyle.svg";
-import ShopCardTwo from "./ShopCardTwo";
 
 function ShopList(props) {
   const [productList, setProductList] = useState([]);
