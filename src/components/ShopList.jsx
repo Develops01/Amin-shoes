@@ -9,6 +9,11 @@ import cafshPic from "../img/anotherCafsh.jpg";
 import listStyleIcon from "../img/listStyle.svg";
 import cardStyleIcon from "../img/cardStyle.svg";
 
+import cafshPic from "../img/anotherCafsh.jpg";
+import listStyleIcon from "../img/listStyle.svg";
+import cardStyleIcon from "../img/cardStyle.svg";
+import ShopCardTwo from "./ShopCardTwo";
+
 function ShopList(props) {
   const [productList, setProductList] = useState([]);
   const [pageSize] = useState(8);
