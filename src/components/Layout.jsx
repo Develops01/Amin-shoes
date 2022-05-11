@@ -8,7 +8,7 @@ function Layout(props) {
   return (
     <div className="w-screen max-w-full min-h-screen overflow-x-hidden flex flex-col">
       <TopHeader />
-      <Header title="انواع کفش مردانه" description="خانه - مردانه" />
+      <Header title={props.title} description={props.description} />
 
       {props.children}
 
