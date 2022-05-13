@@ -1,52 +1,46 @@
 import React, { useEffect, useState } from "react";
-import { paginate } from "./../utils/paginate";
-import Pagination from "./common/pagination";
+import { useSelector, useStore } from "react-redux";
+import { selectProducts, loadProducts } from "./../store/entities/products";
 import ShopCard from "./ShopCard";
 import ShopCardTwo from "./ShopCardTwo";
+import Loading from "./common/Loading";
 
-import cafshPic from "../img/anotherCafsh.jpg";
 import listStyleIcon from "../img/listStyle.svg";
 import cardStyleIcon from "../img/cardStyle.svg";
 
-
 function ShopList(props) {
-  const [productList, setProductList] = useState([]);
-  const [pageSize] = useState(8);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [filtered, setFiltered] = useState([]);
   const [listStyle, setListStyle] = useState("list");
   const [searchQuery, setSearchQuery] = useState("");
 
-  const getProducts = () => {
-    let products = [];
-    for (let i = 0; i < 20; i++) {
-      products[i] = {
-        title: "اسم محصول " + i,
-        image: cafshPic,
-        price: 800,
-        link: "/shop/1",
-      };
-    }
+  const productList = useSelector((state) => selectProducts(state));
+  const loading = useSelector((state) => state.entities.products.loading);
+  const store = useStore();
 
-    setProductList(products);
-  };
+  useEffect(() => {
+    store.dispatch(loadProducts());
+    console.log("setProductList");
+  }, []);
 
-  useEffect(() => getProducts(), []);
+  // Filters
+  useEffect(() => {
+    setFiltered(productList);
+  }, [productList]);
 
-  const handlePageChange = (page) => setCurrentPage(page);
+  useEffect(() => {
+    setFiltered(productList.filter((p) => p.name.includes(searchQuery)));
+  }, [productList, searchQuery]);
 
-  const handleSearch = (query) => {
-    setCurrentPage(1);
-    setSearchQuery(query);
-  };
-
-  let filtered = productList;
-
-  if (searchQuery)
-    filtered = productList.filter((p) =>
-      p.title.includes(searchQuery)
+  if (loading)
+    return (
+      <div className="w-full h-80 flex justify-center items-center">
+        <Loading />
+      </div>
     );
 
-  filtered = paginate(filtered, currentPage, pageSize);
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+  };
 
   return (
     <section className="container mx-auto my-14">
@@ -66,38 +60,36 @@ function ShopList(props) {
           />
         </div>
         <div>
-          <input className="py-1 px-3 text-base" type="text" placeholder="جستوجو" onChange={(e) => handleSearch(e.target.value)} />
+          <input
+            className="py-1 px-3 text-base"
+            type="text"
+            placeholder="جستوجو"
+            onChange={(e) => handleSearch(e.target.value)}
+          />
         </div>
       </div>
 
       <div className="flex flex-wrap gap-4 justify-center items-center my-14 max-w-5xl">
-        {filtered.map(({ title, image, price, link }, i) =>
+        {filtered.map(({ name, photos, sale_product, _id }, i) =>
           listStyle === "card" ? (
             <ShopCard
-              title={title}
-              image={image}
-              price={price}
-              link={link}
+              title={name}
+              image={photos[0].original}
+              price={sale_product}
+              link={_id}
               key={i}
             />
           ) : (
             <ShopCardTwo
-              title={title}
-              image={image}
-              price={price}
-              link={link}
+              title={name}
+              image={photos[0].original}
+              price={sale_product}
+              link={_id}
               key={i}
             />
           )
         )}
       </div>
-
-      <Pagination
-        itemsCount={productList.length}
-        pageSize={pageSize}
-        currentPage={currentPage}
-        onPageChange={handlePageChange}
-      />
     </section>
   );
 }
