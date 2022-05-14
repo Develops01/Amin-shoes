@@ -1,16 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 import jwtDecode from "jwt-decode";
-import http from "../../services/httpService";
 import { apiCallBegan } from "./../apiActions";
 
-const apiEndpoint = process.env.REACT_APP_API_LOGIN;
+const loginEndpoint = process.env.REACT_APP_API_LOGIN;
+const signupEndpoint = process.env.REACT_APP_API_SIGNUP;
 const tokenKey = "token";
 
 const slice = createSlice({
   name: "user",
   initialState: {
     token: null,
-    name: null,
     _id: null,
     iat: null,
     exp: null,
@@ -44,7 +43,7 @@ const slice = createSlice({
         state[key] = null;
       });
     },
-    jwtHasSet: (state) => {
+    jwtHasSetFromCache: (state) => {
       const token = localStorage.getItem(tokenKey) || null;
       if (!token) return;
 
@@ -61,21 +60,21 @@ const slice = createSlice({
 
 export default slice.reducer;
 
-const { loggedIn, loggedInWithJWT, loggedOut, jwtHasSet } = slice.actions;
+const { loggedIn, loggedInWithJWT, loggedOut, jwtHasSetFromCache } = slice.actions;
 
 // ACTIONS
-export const setJwt = () => (dispatch) => {
+export const setJwtFromCache = () => (dispatch) => {
   return dispatch({
-    type: jwtHasSet.type,
+    type: jwtHasSetFromCache.type,
   });
 };
 
 export const login =
-  ({ email, password, onSuccess, onError }) =>
+  ({ email, password, onSuccess, onError, isLoginEndpoint = true }) =>
   async (dispatch) => {
     return dispatch(
       apiCallBegan({
-        url: apiEndpoint,
+        url: (isLoginEndpoint ? loginEndpoint : signupEndpoint),
         method: "post",
         data: {
           email,
