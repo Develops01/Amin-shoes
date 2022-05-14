@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useStore } from "react-redux";
-import { selectProducts, loadProducts } from "./../store/entities/products";
+import { selectProducts, loadProducts, selectProductsLoading } from "./../store/entities/products";
 import ShopCard from "./ShopCard";
 import ShopCardTwo from "./ShopCardTwo";
 import Loading from "./common/Loading";
@@ -10,12 +10,14 @@ import cardStyleIcon from "../img/cardStyle.svg";
 
 function ShopList(props) {
   const [filtered, setFiltered] = useState([]);
-  const [listStyle, setListStyle] = useState("list");
+  const [listStyle, setListStyle] = useState("card");
   const [searchQuery, setSearchQuery] = useState("");
 
   const productList = useSelector((state) => selectProducts(state));
-  const loading = useSelector((state) => state.entities.products.loading);
+  const loading = useSelector((state) => selectProductsLoading(state));
   const store = useStore();
+
+  const imgBaseUrl = "https://amirbackend.ryt-service.ir";
 
   useEffect(() => {
     store.dispatch(loadProducts());
@@ -73,7 +75,7 @@ function ShopList(props) {
           listStyle === "card" ? (
             <ShopCard
               title={name}
-              image={photos[0].original}
+              image={imgBaseUrl + photos[0].original}
               price={sale_product}
               link={_id}
               key={i}
@@ -81,7 +83,7 @@ function ShopList(props) {
           ) : (
             <ShopCardTwo
               title={name}
-              image={photos[0].original}
+              image={imgBaseUrl + photos[0].original}
               price={sale_product}
               link={_id}
               key={i}
