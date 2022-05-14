@@ -15,7 +15,7 @@ function Index(props) {
       <Slide />
       <Features />
       <CollectionGrid />
-      <ShopList />
+      <ShopList baseProductLinkUrl="shop/" />
 
       <Footer />
     </div>
