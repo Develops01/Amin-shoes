@@ -12,7 +12,7 @@ function Login(props) {
   return (
     <ModalWrapper>
       <div className="text-center w-56">
-        <h1 className="text-2xl font-bold mb-4">ثبت نام</h1>
+        <h1 className="text-2xl font-bold mb-4">ورود</h1>
         <input
           type="email"
           value={email}
@@ -31,7 +31,7 @@ function Login(props) {
           className="py-2 px-4 outline-0 bg-orange-500 text-white rounded-lg my-1 cursor-pointer"
           onClick={handleSubmit}
         >
-          ثبت نام
+           ورود
         </button>
       </div>
     </ModalWrapper>
