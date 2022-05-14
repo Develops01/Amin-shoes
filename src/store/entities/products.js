@@ -5,20 +5,7 @@ import { apiCallBegan } from './../apiActions';
 const slice = createSlice({
   name: "products",
   initialState: {
-    list: [
-      {
-        _id: "61af4f43136bba321f96aa4a",
-        name: "کفش 10",
-        sale_product: 12000,
-        slug: "gooii-1ww",
-        photos: [
-          {
-            original: "https://dictionary.cambridge.org/images/thumb/shoe_noun_002_33438.jpg?version=5.0.239",
-            thumbnail: ""
-          },
-        ],
-      },
-    ],
+    list: [],
     loading: false,
     lastFetch: null,
     errorMessage: null,
