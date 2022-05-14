@@ -8,7 +8,7 @@ import Loading from "./common/Loading";
 import listStyleIcon from "../img/listStyle.svg";
 import cardStyleIcon from "../img/cardStyle.svg";
 
-function ShopList(props) {
+function ShopList({baseProductLinkUrl = ""}) {
   const [filtered, setFiltered] = useState([]);
   const [listStyle, setListStyle] = useState("card");
   const [searchQuery, setSearchQuery] = useState("");
@@ -71,13 +71,13 @@ function ShopList(props) {
       </div>
 
       <div className="flex flex-wrap gap-4 justify-center items-center my-14 max-w-5xl">
-        {filtered.map(({ name, photos, sale_product, _id }, i) =>
+        {filtered.map(({ name, photos, sale_product, slug }, i) =>
           listStyle === "card" ? (
             <ShopCard
               title={name}
               image={imgBaseUrl + photos[0].original}
               price={sale_product}
-              link={_id}
+              link={baseProductLinkUrl + slug}
               key={i}
             />
           ) : (
@@ -85,7 +85,7 @@ function ShopList(props) {
               title={name}
               image={imgBaseUrl + photos[0].original}
               price={sale_product}
-              link={_id}
+              link={baseProductLinkUrl + slug}
               key={i}
             />
           )
