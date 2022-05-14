@@ -3,25 +3,25 @@ import { createSlice } from "@reduxjs/toolkit";
 const slice = createSlice({
   name: "modal",
   initialState: {
-    courentModal: null,
+    currentModal: null,
   },
   reducers: {
-    courentModalSet: (state, { payload }) => {
-      state.courentModal = payload;
+    currentModalSet: (state, { payload }) => {
+      state.currentModal = payload;
     },
     modalClosed: (state) => {
-      state.courentModal = null;
+      state.currentModal = null;
     }
   },
 });
 
 export default slice.reducer;
 
-const { courentModalSet, modalClosed } = slice.actions;
+const { currentModalSet, modalClosed } = slice.actions;
 
 // ACTIONS
-export const setCourentModal = (payload) => ({
-    type: courentModalSet.type,
+export const setCurrentModal = (payload) => ({
+    type: currentModalSet.type,
     payload: payload
 });
 
@@ -30,4 +30,4 @@ export const closeModal = () => ({
 })
 
 // SELECTORS
-export const selectCourentModal = (state) => state.entities.modal.courentModal;
+export const selectCurrentModal = (state) => state.entities.modal.currentModal;

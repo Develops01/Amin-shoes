@@ -1,10 +1,10 @@
 import React from "react";
 import Login from "./Login";
 import { useSelector } from "react-redux";
-import { selectCourentModal } from "../store/entities/modal";
+import { selectCurrentModal } from "../store/entities/modal";
 
 const ModalConductor = () => {
-  const currentModal = useSelector((state) => selectCourentModal(state));
+  const currentModal = useSelector((state) => selectCurrentModal(state));
   if (!currentModal) return null;
 
   switch (currentModal) {

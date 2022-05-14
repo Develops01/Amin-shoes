@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { useState } from "react";
 import profilePic from "../img/profile.svg";
 import shopPic from "../img/shop.svg";
-import shoePic from "../img/shose.png";
+import shoePic from "../img/shoes.png";
 
 const itemCreator = ({ icon, title }, index) => {
   return (
