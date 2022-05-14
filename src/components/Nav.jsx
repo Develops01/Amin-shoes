@@ -7,37 +7,12 @@ import { selectCurrentUser } from "../store/entities/user";
 import shoesPic from "../img/shoes.png";
 
 function Nav() {
-  const dispatch = useDispatch();
-  const user = useSelector((state) => selectCurrentUser(state));
-
   return (
     <nav>
       <ul className="container mx-auto flex flex-col sm:flex-row gap-5 items-center justify-center bg-[#320307] text-white py-5 sm:rounded-full">
-        {!user.token && (
-          <Fragment>
-            <li>
-              <Link
-                to=""
-                onClick={() => {
-                  dispatch(setCurrentModal("LOGIN"));
-                }}
-              >
-                ورود
-              </Link>
-            </li>
-
-            <li>
-              <Link
-                to=""
-                onClick={() => {
-                  dispatch(setCurrentModal("SIGNUP"));
-                }}
-              >
-                ثبت نام
-              </Link>
-            </li>
-          </Fragment>
-        )}
+        <li>
+          <Link to="/">خانه</Link>
+        </li>
         <li>
           <Link to="/shop">فروشگاه</Link>
         </li>
