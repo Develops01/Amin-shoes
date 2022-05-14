@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { selectCurrentModal } from "../store/entities/modal";
 import Login from "./Login";
 import Signup from './Signup';
+import ShopCart from './ShopCart';
 
 const ModalConductor = () => {
   const currentModal = useSelector((state) => selectCurrentModal(state));
@@ -14,6 +15,9 @@ const ModalConductor = () => {
 
     case "SIGNUP":
       return <Signup />;
+
+    case "SHOP_CART":
+      return <ShopCart />;
 
     default:
       return null;
