@@ -19,10 +19,11 @@ function Modal({ children, id, onClose, ...props }) {
       onClick={handleClose}
     >
       <article
-        className="max-w-md bg-white rounded-3xl shadow-md py-9 px-7"
+        className="max-w-md bg-white rounded-3xl shadow-md py-9 px-7 relative"
         onClick={(e) => e.stopPropagation()}
         {...props}
       >
+        <button className="absolute top-0 right-0 m-4 font-bold" onClick={handleClose}>⛌</button>
         {children}
       </article>
     </div>
