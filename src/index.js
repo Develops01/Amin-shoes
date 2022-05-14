@@ -6,10 +6,13 @@ import reportWebVitals from "./reportWebVitals";
 import configStore from "./store/configStore";
 import App from "./App";
 import "./index.css";
+import { setJwtFromCache } from "./store/entities/user";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 const store = configStore();
+
+store.dispatch(setJwtFromCache());
 
 root.render(
   <Provider store={store}>
