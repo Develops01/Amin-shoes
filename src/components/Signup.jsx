@@ -19,6 +19,7 @@ function Signup(props) {
         password,
         onSuccess,
         onError,
+        isLoginEndpoint: false
       })
     );
 
