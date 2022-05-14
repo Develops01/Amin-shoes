@@ -1,25 +1,29 @@
 import React from "react";
-
-import shoesPic from "../img/shoes.png";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { setCurrentModal } from "../store/entities/modal";
-import { useDispatch } from "react-redux";
+import { selectCurrentUser } from "../store/entities/user";
+
+import shoesPic from "../img/shoes.png";
 
 function Nav() {
   const dispatch = useDispatch();
+  const user = useSelector((state) => selectCurrentUser(state));
 
   return (
     <nav>
       <ul className="container mx-auto flex flex-col sm:flex-row gap-5 items-center justify-center bg-[#320307] text-white py-5 sm:rounded-full">
         <li>
-          <Link
-            to=""
-            onClick={() => {
-              dispatch(setCurrentModal("LOGIN"));
-            }}
-          >
-            ورود
-          </Link>
+          {!user.token && (
+            <Link
+              to=""
+              onClick={() => {
+                dispatch(setCurrentModal("LOGIN"));
+              }}
+            >
+              ورود
+            </Link>
+          )}
         </li>
         <li>
           <Link to="/shop">فروشگاه</Link>
