@@ -21,6 +21,7 @@ function ShopList({baseProductLinkUrl = ""}) {
 
   useEffect(() => {
     store.dispatch(loadProducts());
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Filters
@@ -64,7 +65,7 @@ function ShopList({baseProductLinkUrl = ""}) {
           <input
             className="py-1 px-3 text-base"
             type="text"
-            placeholder="جستوجو"
+            placeholder="جستجو"
             onChange={(e) => handleSearch(e.target.value)}
           />
         </div>
