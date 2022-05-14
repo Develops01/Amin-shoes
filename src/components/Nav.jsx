@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { setCurrentModal } from "../store/entities/modal";
@@ -13,18 +13,31 @@ function Nav() {
   return (
     <nav>
       <ul className="container mx-auto flex flex-col sm:flex-row gap-5 items-center justify-center bg-[#320307] text-white py-5 sm:rounded-full">
-        <li>
-          {!user.token && (
-            <Link
-              to=""
-              onClick={() => {
-                dispatch(setCurrentModal("LOGIN"));
-              }}
-            >
-              ورود
-            </Link>
-          )}
-        </li>
+        {!user.token && (
+          <Fragment>
+            <li>
+              <Link
+                to=""
+                onClick={() => {
+                  dispatch(setCurrentModal("LOGIN"));
+                }}
+              >
+                ورود
+              </Link>
+            </li>
+
+            <li>
+              <Link
+                to=""
+                onClick={() => {
+                  dispatch(setCurrentModal("SIGNUP"));
+                }}
+              >
+                ثبت نام
+              </Link>
+            </li>
+          </Fragment>
+        )}
         <li>
           <Link to="/shop">فروشگاه</Link>
         </li>
