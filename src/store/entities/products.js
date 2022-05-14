@@ -22,6 +22,10 @@ const slice = createSlice({
     loading: false,
     lastFetch: null,
     errorMessage: null,
+    singleProduct: {
+      name: null,
+      sale_product: null,
+    },
   },
   reducers: {
     productsRequested: (state) => {
@@ -38,12 +42,15 @@ const slice = createSlice({
       state.lastFetch = Date.now();
       state.list = action.payload.data.products;
     },
+    SingleProductReceived: (state, action) => {
+      state.singleProduct = action.payload.data.product;
+    }
   },
 });
 
 export default slice.reducer;
 
-const { productsRequested, productsRequestFailed, productsReceived } = slice.actions;
+const { productsRequested, productsRequestFailed, productsReceived, SingleProductReceived } = slice.actions;
 
 // ACTIONS
 export const loadProducts = () => (dispatch, getState) => {
@@ -64,6 +71,16 @@ export const loadProducts = () => (dispatch, getState) => {
   );
 };
 
+export const loadProductById = (id) => (dispatch, getState) => {
+  return dispatch(
+    apiCallBegan({
+      url: process.env.REACT_APP_API_PRODUCTS_URL + '/' + id,
+      onSuccess: SingleProductReceived.type,
+    })
+  );
+};
+
 // SELECTORS
 export const selectProducts = (state) => state.entities.products.list;
 export const selectProductsLoading = (state) => state.entities.products.loading;
+export const selectSingleProduct = (state) => state.entities.products.singleProduct;
