@@ -19,7 +19,6 @@ function ShopList(props) {
 
   useEffect(() => {
     store.dispatch(loadProducts());
-    console.log("setProductList");
   }, []);
 
   // Filters
