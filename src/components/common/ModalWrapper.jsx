@@ -15,11 +15,11 @@ function Modal({ children, id, onClose, ...props }) {
 
   return (
     <div
-      className="fixed top-0 right-0 bottom-0 left-0 flex justify-center items-center bg-gray-900 bg-opacity-50 z-[100]"
+      className="fixed top-0 right-0 bottom-0 left-0 flex justify-center items-center bg-gray-900 bg-opacity-50 z-[100] cursor-pointer"
       onClick={handleClose}
     >
       <article
-        className="max-w-md bg-white rounded-3xl shadow-md py-9 px-7 relative"
+        className="max-w-md bg-white rounded-3xl shadow-md py-9 px-7 relative cursor-auto"
         onClick={(e) => e.stopPropagation()}
         {...props}
       >
