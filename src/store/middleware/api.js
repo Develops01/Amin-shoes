@@ -30,13 +30,15 @@ const api =
       dispatch(actions.apiCallSucceeded(response.data));
 
       // Specific
-      if (onSuccess) dispatch({ type: onSuccess, payload: response.data });
+      if (typeof onSuccess === "function") onSuccess(response.data);
+      else if (onSuccess) dispatch({ type: onSuccess, payload: response.data });
     } catch (error) {
       // General
       dispatch(actions.apiCallFailed(error.message));
 
       // Specific
-      if (onError)
+      if (typeof onError === "function") onError(error.message);
+      else if (onError)
         dispatch({ type: onError, payload: { errorMessage: error.message } });
     }
   };
