@@ -23,6 +23,7 @@ function SingleProduct() {
 
   useEffect(() => {
     dispatch(loadProductById(params.slug));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
