@@ -22,7 +22,7 @@ function SingleProduct() {
   const handleCounterChange = (value) => setCounter(toInteger(value));
 
   useEffect(() => {
-    dispatch(loadProductById(params.id));
+    dispatch(loadProductById(params.slug));
   }, []);
 
   return (

@@ -71,10 +71,10 @@ export const loadProducts = () => (dispatch, getState) => {
   );
 };
 
-export const loadProductById = (id) => (dispatch, getState) => {
+export const loadProductById = (slug) => (dispatch, getState) => {
   return dispatch(
     apiCallBegan({
-      url: process.env.REACT_APP_API_PRODUCTS_URL + '/' + id,
+      url: process.env.REACT_APP_API_PRODUCTS_URL + '/' + slug,
       onSuccess: SingleProductReceived.type,
     })
   );
