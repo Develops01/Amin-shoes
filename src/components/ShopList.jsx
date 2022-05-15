@@ -20,7 +20,7 @@ function ShopList({baseProductLinkUrl = ""}) {
   const imgBaseUrl = process.env.REACT_APP_BASE_IMAGE_URL;
 
   useEffect(() => {
-    store.dispatch(loadProducts());
+    store.dispatch(loadProducts({page: 1, limit: process.env.REACT_APP_API_PRODUCTS_LIMIT}));
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

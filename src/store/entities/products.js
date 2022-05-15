@@ -6,13 +6,13 @@ const slice = createSlice({
   name: "products",
   initialState: {
     list: [],
+    totalPages: 0,
+    nextPage: 1,
+    totalProducts: 0,
     loading: false,
     lastFetch: null,
     errorMessage: null,
-    singleProduct: {
-      name: null,
-      sale_product: null,
-    },
+    singleProduct: {},
     shopCart: [],
   },
   reducers: {
@@ -29,6 +29,9 @@ const slice = createSlice({
       state.loading = false;
       state.lastFetch = Date.now();
       state.list = action.payload.data.products;
+      state.totalPages = action.payload.data.totalPages;
+      state.nextPage = action.payload.data.nextPage;
+      state.totalProducts = action.payload.data.totalProducts;
     },
     singleProductReceived: (state, action) => {
       state.singleProduct = action.payload.data.product;
@@ -69,7 +72,7 @@ const {
 } = slice.actions;
 
 // ACTIONS
-export const loadProducts = () => (dispatch, getState) => {
+export const loadProducts = ({page, limit}) => (dispatch, getState) => {
   const { lastFetch } = getState().entities.products;
   const minutes = process.env.REACT_APP_API_CACHE_IN_MIN;
 
@@ -83,6 +86,10 @@ export const loadProducts = () => (dispatch, getState) => {
       onStart: productsRequested.type,
       onSuccess: productsReceived.type,
       onError: productsRequestFailed.type,
+      params: {
+        page,
+        limit
+      },
     })
   );
 };
