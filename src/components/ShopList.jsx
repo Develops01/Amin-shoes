@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useStore } from "react-redux";
-import { selectProducts, loadProducts, selectProductsLoading, selectTotalPages } from "./../store/entities/products";
+import {
+  selectProducts,
+  loadProducts,
+  selectProductsLoading,
+  selectTotalPages,
+} from "./../store/entities/products";
 import ShopCard from "./ShopCard";
 import ShopCardTwo from "./ShopCardTwo";
 import Loading from "./common/Loading";
 import Pagination from "./common/pagination";
-import ShopListFilters from './ShopListFilters';
+import ShopListFilters from "./ShopListFilters";
 
-function ShopList({baseProductLinkUrl = ""}) {
+function ShopList({ baseProductLinkUrl = "" }) {
   const [filtered, setFiltered] = useState([]);
   const [listStyle, setListStyle] = useState("card");
   const [searchQuery, setSearchQuery] = useState("");
@@ -22,7 +27,7 @@ function ShopList({baseProductLinkUrl = ""}) {
 
   useEffect(() => {
     store.dispatch(loadProducts());
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   //      ==== FILTERS ====
@@ -33,7 +38,7 @@ function ShopList({baseProductLinkUrl = ""}) {
   // Paginate
   useEffect(() => {
     store.dispatch(loadProducts({ page: currentPage }));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage]);
 
   // Search
@@ -48,13 +53,12 @@ function ShopList({baseProductLinkUrl = ""}) {
       </div>
     );
 
-  const handleSearch = (query) => {
-    setSearchQuery(query);
-  };
-
   return (
     <section className="container mx-auto my-14">
-      <ShopListFilters handleSearch={handleSearch} setListStyle={setListStyle} />
+      <ShopListFilters
+        handleSearch={handleSearch}
+        setListStyle={setListStyle}
+      />
 
       <div className="flex flex-wrap gap-4 justify-center items-center my-14 max-w-5xl">
         {filtered.map(({ name, photos, sale_product, slug, _id }, i) =>
@@ -80,12 +84,20 @@ function ShopList({baseProductLinkUrl = ""}) {
         )}
       </div>
 
-      <Pagination pagesCount={pagesCount} currentPage={currentPage} onPageChange={handlePageChange} />
+      <Pagination
+        pagesCount={pagesCount}
+        currentPage={currentPage}
+        onPageChange={handlePageChange}
+      />
     </section>
   );
 
   function handlePageChange(page) {
     setCurrentPage(page);
+  }
+  
+  function handleSearch(query) {
+    setSearchQuery(query);
   }
 }
 
