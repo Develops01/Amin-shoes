@@ -30,7 +30,7 @@ const slice = createSlice({
       state.lastFetch = Date.now();
       state.list = action.payload.data.products;
     },
-    SingleProductReceived: (state, action) => {
+    singleProductReceived: (state, action) => {
       state.singleProduct = action.payload.data.product;
     },
     productAddedToCart: (state, { payload: { id } }) => {
@@ -63,7 +63,7 @@ const {
   productsRequested,
   productsRequestFailed,
   productsReceived,
-  SingleProductReceived,
+  singleProductReceived,
   productAddedToCart,
   productRemovedFromCart,
 } = slice.actions;
@@ -88,10 +88,24 @@ export const loadProducts = () => (dispatch, getState) => {
 };
 
 export const loadProductById = (slug) => (dispatch, getState) => {
+  const product = getState().entities.products.list.find(
+    (item) => item.slug === slug
+  );
+  if (product) {
+    return dispatch({
+      type: singleProductReceived.type,
+      payload: {
+        data: {
+          product,
+        },
+      },
+    });
+  }
+
   return dispatch(
     apiCallBegan({
       url: process.env.REACT_APP_API_PRODUCTS_URL + "/" + slug,
-      onSuccess: SingleProductReceived.type,
+      onSuccess: singleProductReceived.type,
     })
   );
 };
