@@ -5,8 +5,7 @@ import ShopCard from "./ShopCard";
 import ShopCardTwo from "./ShopCardTwo";
 import Loading from "./common/Loading";
 
-import listStyleIcon from "../img/listStyle.svg";
-import cardStyleIcon from "../img/cardStyle.svg";
+import ShopListFilters from './ShopListFilters';
 
 function ShopList({baseProductLinkUrl = ""}) {
   const [filtered, setFiltered] = useState([]);
@@ -46,30 +45,7 @@ function ShopList({baseProductLinkUrl = ""}) {
 
   return (
     <section className="container mx-auto my-14">
-      <div className="px-8 py-4 bg-[#9B6F47] flex justify-between">
-        <div className="flex gap-4">
-          <img
-            src={cardStyleIcon}
-            alt=""
-            className="w-6 cursor-pointer"
-            onClick={() => setListStyle("card")}
-          />
-          <img
-            src={listStyleIcon}
-            alt=""
-            className="w-6 cursor-pointer"
-            onClick={() => setListStyle("list")}
-          />
-        </div>
-        <div>
-          <input
-            className="py-1 px-3 text-base"
-            type="text"
-            placeholder="جستجو"
-            onChange={(e) => handleSearch(e.target.value)}
-          />
-        </div>
-      </div>
+      <ShopListFilters handleSearch={handleSearch} setListStyle={setListStyle} />
 
       <div className="flex flex-wrap gap-4 justify-center items-center my-14 max-w-5xl">
         {filtered.map(({ name, photos, sale_product, slug, _id }, i) =>
