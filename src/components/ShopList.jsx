@@ -46,13 +46,6 @@ function ShopList({ baseProductLinkUrl = "" }) {
     setFiltered(productList.filter((p) => p.name.includes(searchQuery)));
   }, [productList, searchQuery]);
 
-  if (loading)
-    return (
-      <div className="w-full h-80 flex justify-center items-center">
-        <Loading />
-      </div>
-    );
-
   return (
     <section className="container mx-auto my-14">
       <ShopListFilters
@@ -60,26 +53,30 @@ function ShopList({ baseProductLinkUrl = "" }) {
         setListStyle={setListStyle}
       />
 
-      <div className="flex flex-wrap gap-4 justify-center items-center my-14 max-w-5xl">
-        {filtered.map(({ name, photos, sale_product, slug, _id }, i) =>
-          listStyle === "card" ? (
-            <ShopCard
-              title={name}
-              image={imgBaseUrl + photos[0].original}
-              price={sale_product}
-              link={baseProductLinkUrl + slug}
-              key={i}
-              id={_id}
-            />
-          ) : (
-            <ShopCardTwo
-              title={name}
-              image={imgBaseUrl + photos[0].original}
-              price={sale_product}
-              link={baseProductLinkUrl + slug}
-              key={i}
-              id={_id}
-            />
+      <div className="flex flex-wrap gap-4 justify-center items-center my-14 max-w-5xl min-h-[50vh]">
+        {loading ? (
+          <Loading />
+        ) : (
+          filtered.map(({ name, photos, sale_product, slug, _id }, i) =>
+            listStyle === "card" ? (
+              <ShopCard
+                title={name}
+                image={imgBaseUrl + photos[0].original}
+                price={sale_product}
+                link={baseProductLinkUrl + slug}
+                key={i}
+                id={_id}
+              />
+            ) : (
+              <ShopCardTwo
+                title={name}
+                image={imgBaseUrl + photos[0].original}
+                price={sale_product}
+                link={baseProductLinkUrl + slug}
+                key={i}
+                id={_id}
+              />
+            )
           )
         )}
       </div>
@@ -95,7 +92,7 @@ function ShopList({ baseProductLinkUrl = "" }) {
   function handlePageChange(page) {
     setCurrentPage(page);
   }
-  
+
   function handleSearch(query) {
     setSearchQuery(query);
   }
