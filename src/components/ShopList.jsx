@@ -17,7 +17,7 @@ function ShopList({baseProductLinkUrl = ""}) {
   const loading = useSelector((state) => selectProductsLoading(state));
   const store = useStore();
 
-  const imgBaseUrl = "https://amirbackend.ryt-service.ir";
+  const imgBaseUrl = process.env.REACT_APP_BASE_IMAGE_URL;
 
   useEffect(() => {
     store.dispatch(loadProducts());
@@ -72,7 +72,7 @@ function ShopList({baseProductLinkUrl = ""}) {
       </div>
 
       <div className="flex flex-wrap gap-4 justify-center items-center my-14 max-w-5xl">
-        {filtered.map(({ name, photos, sale_product, slug }, i) =>
+        {filtered.map(({ name, photos, sale_product, slug, _id }, i) =>
           listStyle === "card" ? (
             <ShopCard
               title={name}
@@ -80,6 +80,7 @@ function ShopList({baseProductLinkUrl = ""}) {
               price={sale_product}
               link={baseProductLinkUrl + slug}
               key={i}
+              id={_id}
             />
           ) : (
             <ShopCardTwo
@@ -88,6 +89,7 @@ function ShopList({baseProductLinkUrl = ""}) {
               price={sale_product}
               link={baseProductLinkUrl + slug}
               key={i}
+              id={_id}
             />
           )
         )}
