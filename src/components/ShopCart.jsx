@@ -1,9 +1,16 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { closeModal } from "./../store/entities/modal";
+import {
+  selectCart,
+  removeProductFromCart,
+} from "./../store/entities/products";
 
 function ShopCart(props) {
   const dispatch = useDispatch();
+  const items = useSelector((state) => selectCart(state));
+
+  const imgBaseUrl = process.env.REACT_APP_BASE_IMAGE_URL;
 
   const handleClose = () => {
     // General
@@ -16,7 +23,7 @@ function ShopCart(props) {
       onClick={handleClose}
     >
       <article
-        className="fixed top-0 right-0 bottom-0 w-72 flex flex-col py-12 px-7 bg-white shadow-lg cursor-auto"
+        className="fixed top-0 right-0 bottom-0 w-80 flex flex-col py-12 px-7 bg-white shadow-lg cursor-auto"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -27,42 +34,34 @@ function ShopCart(props) {
         </button>
         <h1 className="text-2xl mb-5">سبد خرید</h1>
         <div className="flex flex-col">
-          <div className="flex items-center justify-between">
-            <img src="https://amirbackend.ryt-service.ir/uploads/products/H1HYipGJ9-20_9a8f0fa0-39ff-4fe2-b3cb-12517a928e10_370x370.png" alt="" className="w-20" />
-            <div>
-              <h4 className="font-bold">محصول 1</h4>
-              <span className="text-sm">تومان 800  1x</span>
-            </div>
-            <button>⛌</button>
-          </div>
-          <div className="flex items-center justify-between">
-            <img src="https://amirbackend.ryt-service.ir/uploads/products/H1HYipGJ9-20_9a8f0fa0-39ff-4fe2-b3cb-12517a928e10_370x370.png" alt="" className="w-20" />
-            <div>
-              <h4 className="font-bold">محصول 1</h4>
-              <span className="text-sm">تومان 800  1x</span>
-            </div>
-            <button>⛌</button>
-          </div>
-          <div className="flex items-center justify-between">
-            <img src="https://amirbackend.ryt-service.ir/uploads/products/H1HYipGJ9-20_9a8f0fa0-39ff-4fe2-b3cb-12517a928e10_370x370.png" alt="" className="w-20" />
-            <div>
-              <h4 className="font-bold">محصول 1</h4>
-              <span className="text-sm">تومان 800  1x</span>
-            </div>
-            <button>⛌</button>
-          </div>
-          <div className="flex items-center justify-between">
-            <img src="https://amirbackend.ryt-service.ir/uploads/products/H1HYipGJ9-20_9a8f0fa0-39ff-4fe2-b3cb-12517a928e10_370x370.png" alt="" className="w-20" />
-            <div>
-              <h4 className="font-bold">محصول 1</h4>
-              <span className="text-sm">تومان 800  1x</span>
-            </div>
-            <button>⛌</button>
-          </div>
+          {items.map((item, i) => createItem(item, i))}
         </div>
       </article>
     </div>
   );
+
+  function createItem(item, i) {
+    return (
+      <div className="flex items-center justify-between" key={i}>
+        <div className="flex">
+          <img
+            src={imgBaseUrl + item.photos[0].original}
+            alt=""
+            className="w-20"
+          />
+          <div>
+            <h4 className="font-bold">{item.name}</h4>
+            <span className="text-sm">
+              تومان {item.price} {item.quantity}x
+            </span>
+          </div>
+        </div>
+        <button onClick={() => dispatch(removeProductFromCart(item._id))}>
+          ⛌
+        </button>
+      </div>
+    );
+  }
 }
 
 export default ShopCart;
