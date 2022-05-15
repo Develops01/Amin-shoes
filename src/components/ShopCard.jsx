@@ -14,7 +14,7 @@ function ShopCard({ title, image, price, link, id }) {
         <img src={shopPic} alt="" />
       </button>
       <Link to={link} className="flex flex-col p-4 border-2 text-center">
-        <img src={image} alt="" className="mb-4" />
+        <img src={image} alt="" className="mb-4 max-w-xs" />
         <h3 className="text-sm font-extrabold">{title}</h3>
         <span className="text-[#9B6F47]">{price} تومان</span>
       </Link>
