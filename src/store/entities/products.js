@@ -72,27 +72,31 @@ const {
 } = slice.actions;
 
 // ACTIONS
-export const loadProducts = ({page, limit}) => (dispatch, getState) => {
-  const { lastFetch } = getState().entities.products;
-  const minutes = process.env.REACT_APP_API_CACHE_IN_MIN;
+export const loadProducts =
+  (params) =>
+  (dispatch, getState) => {
+    const page = (params && params.page) || 1;
+    const limit = (params && params.limit) || process.env.REACT_APP_API_PRODUCTS_LIMIT;
 
-  const diffInMinutes = moment().diff(moment(lastFetch), "M");
+    const { lastFetch } = getState().entities.products;
+    const minutes = process.env.REACT_APP_API_CACHE_IN_MIN;
 
-  if (diffInMinutes < minutes) return;
+    const diffInMinutes = moment().diff(moment(lastFetch), "M");
+    if (diffInMinutes < minutes && !params) return;
 
-  return dispatch(
-    apiCallBegan({
-      url: process.env.REACT_APP_API_PRODUCTS_URL,
-      onStart: productsRequested.type,
-      onSuccess: productsReceived.type,
-      onError: productsRequestFailed.type,
-      params: {
-        page,
-        limit
-      },
-    })
-  );
-};
+    return dispatch(
+      apiCallBegan({
+        url: process.env.REACT_APP_API_PRODUCTS_URL,
+        onStart: productsRequested.type,
+        onSuccess: productsReceived.type,
+        onError: productsRequestFailed.type,
+        params: {
+          page,
+          limit,
+        },
+      })
+    );
+  };
 
 export const loadProductById = (slug) => (dispatch, getState) => {
   const product = getState().entities.products.list.find(
@@ -141,3 +145,4 @@ export const selectCart = (state) => state.entities.products.shopCart;
 export const selectProductsLoading = (state) => state.entities.products.loading;
 export const selectSingleProduct = (state) =>
   state.entities.products.singleProduct;
+export const selectTotalPages = (state) => state.entities.products.totalPages;
