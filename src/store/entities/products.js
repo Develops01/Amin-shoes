@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import moment from "moment";
-import { apiCallBegan } from './../apiActions';
+import { apiCallBegan } from "./../apiActions";
 
 const slice = createSlice({
   name: "products",
@@ -13,6 +13,7 @@ const slice = createSlice({
       name: null,
       sale_product: null,
     },
+    shopCart: [],
   },
   reducers: {
     productsRequested: (state) => {
@@ -31,13 +32,41 @@ const slice = createSlice({
     },
     SingleProductReceived: (state, action) => {
       state.singleProduct = action.payload.data.product;
-    }
+    },
+    productAddedToCart: (state, { payload: { id } }) => {
+      const product = state.list.find((p) => p._id === id);
+
+      const alreadyExist = state.shopCart.find((p) => p._id === id);
+      if (alreadyExist) {
+        alreadyExist.quantity++;
+        return;
+      }
+
+      product.quantity = 1;
+      state.shopCart.push(product);
+    },
+    productRemovedFromCart: (state, action) => {
+      state.shopCart = state.shopCart.filter((item) => {
+        if (item._id === action.payload.id && item.quantity > 1) {
+          item.quantity--;
+          return true;
+        }
+        return item._id !== action.payload.id;
+      });
+    },
   },
 });
 
 export default slice.reducer;
 
-const { productsRequested, productsRequestFailed, productsReceived, SingleProductReceived } = slice.actions;
+const {
+  productsRequested,
+  productsRequestFailed,
+  productsReceived,
+  SingleProductReceived,
+  productAddedToCart,
+  productRemovedFromCart,
+} = slice.actions;
 
 // ACTIONS
 export const loadProducts = () => (dispatch, getState) => {
@@ -61,13 +90,33 @@ export const loadProducts = () => (dispatch, getState) => {
 export const loadProductById = (slug) => (dispatch, getState) => {
   return dispatch(
     apiCallBegan({
-      url: process.env.REACT_APP_API_PRODUCTS_URL + '/' + slug,
+      url: process.env.REACT_APP_API_PRODUCTS_URL + "/" + slug,
       onSuccess: SingleProductReceived.type,
     })
   );
 };
 
+export const addProductToCart = (id) => (dispatch) => {
+  return dispatch({
+    type: productAddedToCart.type,
+    payload: {
+      id,
+    },
+  });
+};
+
+export const removeProductFromCart = (id) => (dispatch) => {
+  return dispatch({
+    type: productRemovedFromCart.type,
+    payload: {
+      id,
+    },
+  });
+};
+
 // SELECTORS
 export const selectProducts = (state) => state.entities.products.list;
+export const selectCart = (state) => state.entities.products.shopCart;
 export const selectProductsLoading = (state) => state.entities.products.loading;
-export const selectSingleProduct = (state) => state.entities.products.singleProduct;
+export const selectSingleProduct = (state) =>
+  state.entities.products.singleProduct;
