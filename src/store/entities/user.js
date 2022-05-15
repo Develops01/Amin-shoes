@@ -44,8 +44,8 @@ const slice = createSlice({
       });
     },
     jwtHasSetFromCache: (state) => {
-      const token = localStorage.getItem(tokenKey) || null;
-      if (!token) return;
+      const token = localStorage.getItem(tokenKey);
+      if (token === "undefined" || token == null ) return;
 
       const decoded = jwtDecode(token);
 
