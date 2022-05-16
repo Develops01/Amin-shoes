@@ -1,8 +1,9 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { closeModal } from "./../../store/entities/modal";
 
-function Modal({ children, id, onClose, ...props }) {
+function ModalWrapper({ children, onClose, ...props }) {
   const dispatch = useDispatch();
 
   const handleClose = () => {
@@ -30,4 +31,9 @@ function Modal({ children, id, onClose, ...props }) {
   );
 }
 
-export default Modal;
+ModalWrapper.propTypes = {
+  children: PropTypes.node.isRequired,
+  onClose: PropTypes.func,
+};
+
+export default ModalWrapper;
